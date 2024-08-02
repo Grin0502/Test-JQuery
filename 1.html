@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Embed External Website</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+          display: flex;
+        }
+        #control-wrapper {
+          display: flex;
+          width: 600px;
+          padding: 20px;
+        }
+        #control-container {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: fit-content;
+          border-radius: 5px;
+          gap: 20px;
+          padding: 20px;
+          background-color: #F8F9FC;
+          border: 1px solid #E2E2E2;
+        }
+        .Row {
+          display: flex;
+          align-items: center;
+        }
+        .Col {
+          display: flex;
+          flex-direction: column;
+        }
+        #iframe-container {
+            position: relative;
+            width: 100%;
+            height: 90vh; /* Adjust as needed */
+        }
+        .container-title {
+          font-size: 22px;
+          font-weight: bold;
+          margin: 0;
+        }
+        .md-label {
+          min-width: 75px;
+          font-size: 15px;
+          margin: 0;
+        }
+        select {
+          padding: 5px;
+          width: 150px;
+        }
+        input {
+          width: 100%;
+          padding: 5px;
+        }
+        .grow {
+          flex: 1;
+        }
+        input[type="color"] {
+          width: 50px;
+        }
+        #floatingButton {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            position: absolute;
+            z-index: 1000;
+            padding: 10px;
+            cursor: pointer;
+        }
+        #floatingButton svg {
+          width: 20px;
+          height: 20px;
+        }
+        #floatingButton::before {
+          width: 6px;
+          height: 6px;
+          content: "";
+          background-color: red;
+          position: absolute;
+          right: 10px;
+          top: 0px;
+          border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="control-wrapper">
+      <div id="control-container">
+        <p class="container-title">Button</p> 
+        <div class="Row" style="gap: 10px;">
+          <p class="md-label">Button Type</p>
+          <select id="buttonType">
+            <option>Rounded with text</option>
+            <option>No radius</option>
+          </select>
+        </div>
+        <div class="Row" style="gap: 10px;">
+          <p class="md-label">Button Text</p>
+          <input type="text" id="buttonText" value="Any questions? Ask in Whatsapp"/>
+        </div>
+        <div class="Row" style="gap: 10px;">
+          <div class="Col grow">
+            <div class="md-label">Button Position - Desktop</div>
+            <select id="button-position-desktop">
+              <option value="bottom-right">Bottom-right</option>
+              <option value="bottom-left">Bottom-left</option>
+              <option value="top-right">Top-right</option>
+              <option value="top-left">Top-left</option>
+            </select>
+          </div>
+          <div class="Col grow">
+            <div class="md-label">Button Position - Mobile</div>
+            <select id="button-position-mobile">
+              <option value="bottom-right">Bottom-right</option>
+              <option value="bottom-left">Bottom-left</option>
+              <option value="top-right">Top-right</option>
+              <option value="top-left">Top-left</option>
+            </select>
+          </div>
+        </div>
+        <div class="Row" style="gap: 10px;">
+          <div class="Col grow">
+            <div class="md-label">Background Color</div>
+            <input type="color" id="backgroundColor" value="#00FF00">
+          </div>
+          <div class="Col grow">
+            <div class="md-label">Text Color</div>
+            <input type="color" id="textColor" value="#FFFFFF">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="iframe-container">
+        <iframe id="external-website" src="https://rabbitseo.com" width="100%" height="100%"></iframe>
+        <div id="floatingButton">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12c0 2.2.7 4.24 1.9 5.9L2 22l5.04-1.9C8.76 21.3 10.8 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-1 16.1c-2.8 0-5.4-1.08-7.3-2.87l1.03-1.53c1.36 1.07 3.09 1.75 5.27 1.75 2.8 0 5.4-1.08 7.3-2.87l1.03 1.53c-1.36 1.07-3.09 1.75-5.27 1.75zm1.4-3.6c-1.84 0-3.66-.6-5.17-1.73l1.09-1.55c1.31.94 2.82 1.46 4.35 1.46 1.83 0 3.63-.67 5.03-1.78l1.1 1.54c-1.28 1.06-2.84 1.71-4.6 1.71z"/>
+          </svg>
+          <span id="buttonText-update">Any questions? Ask in Whatsapp</span>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            function updateButton() {
+                const buttonType = $('#buttonType').val();
+                const buttonText = $('#buttonText').val();
+                const backgroundColor = $('#backgroundColor').val();
+                const buttonPositionDesktop = $('#button-position-desktop').val();
+                const buttonPositionMobile = $('#button-position-mobile').val();
+                const textColor = $('#textColor').val();
+
+                const floatingButton = $('#floatingButton');
+                const buttonTextUpdate = $('#buttonText-update');
+                buttonTextUpdate.text(buttonText);
+                floatingButton.css('background-color', backgroundColor);
+                floatingButton.css('color', textColor);
+                floatingButton.css('border-radius', buttonType === 'Rounded with text' ? '20px' : '0px');
+
+                const positions = {
+                    'bottom-right': { bottom: '10px', right: '10px' },
+                    'bottom-left': { bottom: '10px', left: '10px' },
+                    'top-right': { top: '10px', right: '10px' },
+                    'top-left': { top: '10px', left: '10px' }
+                };
+
+                const isMobile = window.matchMedia("(max-width: 768px)").matches;
+                const position = isMobile ? buttonPositionMobile : buttonPositionDesktop;
+
+                floatingButton.css({ top: '', bottom: '', left: '', right: '' });
+                floatingButton.css(positions[position]);
+            }
+
+            $('#buttonType, #buttonText, #button-position-desktop, #button-position-mobile, #backgroundColor, #textColor').on('input change', updateButton);
+
+            updateButton();
+        });
+    </script>
+</body>
+</html>
